@@ -1,0 +1,76 @@
+from pathlib import Path html = """<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width,initial-scale=1,viewport-fit=cover"
+		/>
+		<meta name="theme-color" content="#050b1c" />
+		<title>...</title>
+		<style>
+			*{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;min-height:100%;overflow:hidden}
+			body{font-family:Georgia,"Times New Roman",serif;color:#f4f6ff;background:linear-gradient(145deg,#030713,#07152f 48%,#0b2450);-webkit-tap-highlight-color:transparent;transition:background 2.6s ease,color 1.2s ease}
+			.scene{width:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;text-align:center}
+			.intro{width:min(90vw,700px);margin-bottom:52px}#typewriter{font-size:clamp(1.15rem,4.8vw,1.65rem);line-height:1.9;letter-spacing:.07em;min-height:7.5rem}.line{display:block}
+			#typewriter:after{content:"";display:inline-block;width:1px;height:1em;margin-left:4px;vertical-align:-.12em;background:currentColor;animation:blink .9s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+			.doors{width:min(94vw,900px);display:flex;justify-content:center;gap:clamp(16px,5vw,48px)}
+			.door-button{appearance:none;border:0;background:transparent;color:inherit;width:clamp(90px,24vw,185px);aspect-ratio:.58;cursor:pointer;touch-action:manipulation;position:relative}
+			.door-frame{position:absolute;inset:0;border:2px solid #7080a060;border-radius:5px 5px 2px 2px;background:linear-gradient(90deg,#ffffff09,transparent 20%,transparent 80%,#ffffff09),linear-gradient(#101b30,#07101f);box-shadow:0 18px 45px #00000073,inset 0 0 24px #00000059;overflow:hidden}
+			.door-panel{position:absolute;inset:12% 13%;border:1px solid #e1ebff2e;background:#0a1427}.door-knob{position:absolute;right:16%;top:52%;width:7px;height:7px;border-radius:50%;background:#aaa}.door-number{position:absolute;bottom:8%;left:0;right:0;font:clamp(.7rem,2.5vw,.9rem) Arial,sans-serif;letter-spacing:.25em;color:#f5f8ff9e}
+			.result{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:30px;text-align:center;background:#050b18;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .55s ease}
+			.result.show{opacity:1;visibility:visible;pointer-events:auto}.result-card{width:min(90vw,560px)}.result h2{font-size:clamp(1.5rem,6vw,2.3rem);font-weight:400;margin-bottom:18px}.result p{font: .92rem/1.7 Arial,sans-serif;color:#f5f8ffa6;margin-bottom:28px}.retry{border:1px solid #ffffff4d;background:transparent;color:#fff;padding:12px 22px;border-radius:999px;cursor:pointer;letter-spacing:.08em}
+			.birthday{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#dcecff,#f8fbff 52%,#fff);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 2.6s ease,visibility 2.6s ease}.birthday.show{opacity:1;visibility:visible}.birthday h1{font-size:clamp(2.2rem,11vw,6.2rem);line-height:1.02;font-weight:700;transform:scale(.05);opacity:0}.birthday.show h1{animation:zoom .75s cubic-bezier(.12,.85,.22,1.05) forwards;animation-delay:2.5s}@keyframes zoom{0%{transform:scale(.05);opacity:0}65%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+			@media(max-width:420px){.doors{gap:10px}.door-button{width:29vw}}
+		</style>
+	</head>
+	<body>
+		<main class="scene" id="mainScene">
+			<section class="intro">
+				<div id="typewriter" aria-live="polite"></div>
+			</section>
+			<section class="doors" aria-label="Choose a door">
+				<button class="door-button" data-door="1" aria-label="Door 1">
+					<span class="door-frame"
+						><span class="door-panel"></span
+						><span class="door-knob"></span
+						><span class="door-number">01</span></span
+					>
+				</button>
+				<button class="door-button" data-door="2" aria-label="Door 2">
+					<span class="door-frame"
+						><span class="door-panel"></span
+						><span class="door-knob"></span
+						><span class="door-number">02</span></span
+					>
+				</button>
+				<button class="door-button" data-door="3" aria-label="Door 3">
+					<span class="door-frame"
+						><span class="door-panel"></span
+						><span class="door-knob"></span
+						><span class="door-number">03</span></span
+					>
+				</button>
+			</section>
+		</main>
+		<div class="result" id="wrongResult">
+			<div class="result-card">
+				<h2 id="wrongTitle"></h2>
+				<p id="wrongText"></p>
+				<button class="retry" id="retry">Try again</button>
+			</div>
+		</div>
+		<div class="birthday" id="birthday">
+			<h1>HAPPY BIRTHDAY, SAM!!!</h1>
+		</div>
+		<script>
+			const typewriter=document.getElementById("typewriter"),wrongResult=document.getElementById("wrongResult"),birthday=document.getElementById("birthday"),mainScene=document.getElementById("mainScene");
+			async function typeLine(text,speed=105){const line=document.createElement("span");line.className="line";typewriter.appendChild(line);for(const c of text){line.textContent+=c;await new Promise(r=>setTimeout(r,speed))}}
+			async function intro(){await typeLine("Hello.");await new Promise(r=>setTimeout(r,650));await typeLine("Choose a door to continue.")}intro();
+			document.querySelectorAll(".door-button").forEach(b=>b.onclick=()=>{const d=+b.dataset.door;if(d===3){mainScene.style.opacity="0";mainScene.style.pointerEvents="none";setTimeout(()=>birthday.classList.add("show"),250)}else{document.getElementById("wrongTitle").textContent=d===2?"Oh, come on.":"Wrong door.";document.getElementById("wrongText").textContent=d===2?"You picked the wrong door. Even the principal would have something to say about this.":"You picked the wrong one. Refresh the page to try again.";wrongResult.classList.add("show")}});
+			document.getElementById("retry").onclick=()=>wrongResult.classList.remove("show");
+		</script>
+	</body>
+</html>
+""" path=Path("/mnt/data/birthday_website_v0_2.html")
+path.write_text(html,encoding="utf-8") print("Created:", path)
