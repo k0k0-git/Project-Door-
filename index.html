@@ -1,24 +1,420 @@
 from pathlib import Path
+from shutil import copyfile
+from zipfile import ZipFile, ZIP_DEFLATED
+from PIL import Image
+
+src = Path("/mnt/data/4279F075-44B6-449B-85FD-17D0F2462B3C.jpeg")
+img = Image.open(src)
+print("Using meme image:", img.size)
+
+project = Path("/mnt/data/birthday_website_v5")
+project.mkdir(exist_ok=True)
+asset = project / "principal-meme.jpeg"
+copyfile(src, asset)
+
 html = '''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050b1c"><title>...</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;min-height:100%;overflow:hidden}body{font-family:Georgia,"Times New Roman",serif;color:#f4f6ff;background:linear-gradient(145deg,#030713,#07152f 48%,#0b2450);-webkit-tap-highlight-color:transparent}.scene{width:100%;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px 70px;text-align:center;transition:opacity .8s ease}.intro{width:min(90vw,700px);margin-bottom:52px}#typewriter{font-size:clamp(1.15rem,4.8vw,1.65rem);line-height:1.9;letter-spacing:.07em;min-height:7.5rem}.line{display:block}.type-char{white-space:pre}.cursor{display:inline-block;width:2px;height:1em;margin-left:4px;vertical-align:-.12em;background:currentColor;animation:blink .8s steps(1,end) infinite}@keyframes blink{50%{opacity:0}}
-.doors{width:min(94vw,900px);display:flex;justify-content:center;gap:clamp(16px,5vw,48px)}.door-button{appearance:none;border:0;background:transparent;color:inherit;width:clamp(90px,24vw,185px);aspect-ratio:.58;cursor:pointer;touch-action:manipulation;position:relative}.door-frame{position:absolute;inset:0;border:2px solid rgba(112,128,160,.38);border-radius:5px 5px 2px 2px;background:linear-gradient(90deg,rgba(255,255,255,.035),transparent 20%,transparent 80%,rgba(255,255,255,.035)),linear-gradient(#101b30,#07101f);box-shadow:0 18px 45px rgba(0,0,0,.45),inset 0 0 24px rgba(0,0,0,.35);overflow:hidden}.door-panel{position:absolute;inset:12% 13%;border:1px solid rgba(225,235,255,.18);background:#0a1427}.door-knob{position:absolute;right:16%;top:52%;width:7px;height:7px;border-radius:50%;background:#aaa}.door-number{position:absolute;bottom:8%;left:0;right:0;font:clamp(.7rem,2.5vw,.9rem) Arial,sans-serif;letter-spacing:.25em;color:rgba(245,248,255,.62)}
-.result{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:30px 30px 70px;text-align:center;background:#050b18;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .55s ease,visibility .55s ease}.result.show{opacity:1;visibility:visible;pointer-events:auto}.result-card{width:min(90vw,560px)}.result h2{font-size:clamp(1.5rem,6vw,2.3rem);font-weight:400;margin-bottom:18px}.result p{font:.92rem/1.7 Arial,sans-serif;color:rgba(245,248,255,.65);margin-bottom:28px}.retry{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;padding:12px 22px;border-radius:999px;cursor:pointer;letter-spacing:.08em}
-.birthday{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;padding:30px 30px 70px;text-align:center;background:linear-gradient(145deg,#dcecff,#f8fbff 52%,#fff);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 3.6s ease,visibility 3.6s ease}.birthday.show{opacity:1;visibility:visible}.birthday h1{color:#6b4a32;font-size:clamp(2.6rem,12vw,7rem);line-height:1.04;font-weight:700;letter-spacing:-.03em;transform:scale(.04);opacity:0}.birthday .sam{display:block;margin-top:.14em;font-size:1.18em}.birthday.show h1{animation:birthdayZoom 1.35s cubic-bezier(.16,.84,.24,1) forwards;animation-delay:3.35s}@keyframes birthdayZoom{0%{transform:scale(.04);opacity:0}58%{transform:scale(1.055);opacity:1}100%{transform:scale(1);opacity:1}}
-.credit{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:100;font:500 clamp(.7rem,2.7vw,.9rem)/1 Arial,sans-serif;letter-spacing:.08em;white-space:nowrap;color:rgba(245,248,255,.48);pointer-events:none}body.birthday-active .credit{color:rgba(107,74,50,.55)}@media(max-width:420px){.doors{gap:10px}.door-button{width:29vw}}
-</style></head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050b1c">
+  <title>...</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #f4f6ff;
+      background: linear-gradient(145deg, #030713 0%, #07152f 48%, #0b2450 100%);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .scene {
+      width: 100%;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px 70px;
+      text-align: center;
+      transition: opacity .8s ease;
+    }
+
+    .intro {
+      width: min(90vw, 700px);
+      margin-bottom: 52px;
+    }
+
+    #typewriter {
+      font-size: clamp(1.15rem, 4.8vw, 1.65rem);
+      line-height: 1.9;
+      letter-spacing: .07em;
+      min-height: 7.5rem;
+    }
+
+    .line { display: block; }
+    .type-char { white-space: pre; }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      margin-left: 4px;
+      vertical-align: -.12em;
+      background: currentColor;
+      animation: blink .8s steps(1, end) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .doors {
+      width: min(94vw, 900px);
+      display: flex;
+      justify-content: center;
+      gap: clamp(16px, 5vw, 48px);
+    }
+
+    .door-button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      width: clamp(90px, 24vw, 185px);
+      aspect-ratio: .58;
+      cursor: pointer;
+      touch-action: manipulation;
+      position: relative;
+    }
+
+    .door-frame {
+      position: absolute;
+      inset: 0;
+      border: 2px solid rgba(181, 138, 99, .55);
+      border-radius: 5px 5px 2px 2px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.05), transparent 20%, transparent 80%, rgba(255,255,255,.04)),
+        linear-gradient(145deg, #5f3b25 0%, #8b5a39 48%, #3d2417 100%);
+      box-shadow:
+        0 18px 45px rgba(0,0,0,.45),
+        inset 0 0 24px rgba(0,0,0,.34);
+      overflow: hidden;
+    }
+
+    .door-panel {
+      position: absolute;
+      inset: 12% 13%;
+      border: 1px solid rgba(245, 220, 190, .22);
+      background:
+        linear-gradient(145deg, #71452c 0%, #4b2c1c 55%, #2f1b12 100%);
+      box-shadow: inset 0 0 18px rgba(0,0,0,.28);
+    }
+
+    .door-knob {
+      position: absolute;
+      right: 16%;
+      top: 52%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c79a61;
+      box-shadow: 0 0 8px rgba(199,154,97,.35);
+    }
+
+    .door-number {
+      position: absolute;
+      bottom: 8%;
+      left: 0;
+      right: 0;
+      font: clamp(.7rem, 2.5vw, .9rem) Arial, sans-serif;
+      letter-spacing: .25em;
+      color: rgba(255, 239, 219, .72);
+    }
+
+    .result {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 30px 70px;
+      text-align: center;
+      background: #050b18;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+
+    .result.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .result-card {
+      width: min(90vw, 560px);
+    }
+
+    .result h2 {
+      font-size: clamp(1.5rem, 6vw, 2.3rem);
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+
+    .result p {
+      font: .92rem/1.7 Arial, sans-serif;
+      color: rgba(245,248,255,.7);
+      margin-bottom: 24px;
+    }
+
+    .meme-image {
+      display: none;
+      width: min(72vw, 330px);
+      max-height: 38svh;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      border-radius: 10px;
+      box-shadow: 0 16px 45px rgba(0,0,0,.35);
+    }
+
+    .result.meme-mode .meme-image {
+      display: block;
+    }
+
+    .retry {
+      border: 1px solid rgba(255,255,255,.3);
+      background: transparent;
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: .08em;
+    }
+
+    .birthday {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 30px 70px;
+      text-align: center;
+      background: linear-gradient(145deg, #dcecff 0%, #f8fbff 52%, #ffffff 100%);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 3.25s ease, visibility 3.25s ease;
+    }
+
+    .birthday.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .birthday h1 {
+      color: #6b4a32;
+      font-size: clamp(2.6rem, 12vw, 7rem);
+      line-height: 1.04;
+      font-weight: 700;
+      letter-spacing: -.03em;
+      transform: scale(.04);
+      opacity: 0;
+    }
+
+    .birthday .sam {
+      display: block;
+      margin-top: .14em;
+      font-size: 1.18em;
+    }
+
+    .birthday.show h1 {
+      animation: birthdayZoom 1.35s cubic-bezier(.16,.84,.24,1) forwards;
+      animation-delay: 2.95s;
+    }
+
+    @keyframes birthdayZoom {
+      0%   { transform: scale(.04); opacity: 0; }
+      58%  { transform: scale(1.14); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .credit {
+      position: fixed;
+      left: 50%;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 100;
+      font: 500 clamp(.7rem, 2.7vw, .9rem)/1 Arial, sans-serif;
+      letter-spacing: .08em;
+      white-space: nowrap;
+      color: rgba(245,248,255,.48);
+      pointer-events: none;
+    }
+
+    body.birthday-active .credit {
+      color: rgba(107,74,50,.55);
+    }
+
+    @media (max-width: 420px) {
+      .doors { gap: 10px; }
+      .door-button { width: 29vw; }
+      .meme-image { width: min(76vw, 330px); }
+    }
+  </style>
+</head>
+
 <body>
-<main class="scene" id="mainScene"><section class="intro"><div id="typewriter" aria-live="polite"></div></section><section class="doors" aria-label="Choose a door"><button class="door-button" data-door="1" aria-label="Door 1"><span class="door-frame"><span class="door-panel"></span><span class="door-knob"></span><span class="door-number">01</span></span></button><button class="door-button" data-door="2" aria-label="Door 2"><span class="door-frame"><span class="door-panel"></span><span class="door-knob"></span><span class="door-number">02</span></span></button><button class="door-button" data-door="3" aria-label="Door 3"><span class="door-frame"><span class="door-panel"></span><span class="door-knob"></span><span class="door-number">03</span></span></button></section></main>
-<div class="result" id="wrongResult"><div class="result-card"><h2 id="wrongTitle"></h2><p id="wrongText"></p><button class="retry" id="retry">Try again</button></div></div>
-<div class="birthday" id="birthday"><h1>HAPPY BIRTHDAY,<span class="sam">SAM!!!</span></h1></div><div class="credit">Made by Kasra</div>
-<script>
-const tw=document.getElementById("typewriter"),wrong=document.getElementById("wrongResult"),wt=document.getElementById("wrongTitle"),wx=document.getElementById("wrongText"),bd=document.getElementById("birthday"),main=document.getElementById("mainScene");
-async function typeLine(text,speed=115){const line=document.createElement("span");line.className="line";tw.appendChild(line);for(const char of text){const letter=document.createElement("span");letter.className="type-char";letter.textContent=char;const cursor=document.createElement("span");cursor.className="cursor";line.append(letter,cursor);await new Promise(r=>setTimeout(r,speed));cursor.remove()}const finalCursor=document.createElement("span");finalCursor.className="cursor";line.appendChild(finalCursor)}
-(async()=>{await typeLine("Hello.");await new Promise(r=>setTimeout(r,650));const old=tw.querySelector(".cursor");if(old)old.remove();await typeLine("Choose a door to continue.")})();
-document.querySelectorAll(".door-button").forEach(b=>b.addEventListener("click",()=>{const d=+b.dataset.door;if(d===3){main.style.opacity="0";main.style.pointerEvents="none";setTimeout(()=>{bd.classList.add("show");document.body.classList.add("birthday-active")},300)}else{wt.textContent=d===2?"Oh, come on.":"Wrong door.";wx.textContent=d===2?"You picked the wrong door. Even the principal would have something to say about this.":"You picked the wrong one. Try again.";wrong.classList.add("show")}}));
-document.getElementById("retry").addEventListener("click",()=>wrong.classList.remove("show"));
-</script></body></html>'''
-path=Path("/mnt/data/birthday_website_v0_4.html")
-path.write_text(html,encoding="utf-8")
-print(path)
+  <main class="scene" id="mainScene">
+    <section class="intro">
+      <div id="typewriter" aria-live="polite"></div>
+    </section>
+
+    <section class="doors" aria-label="Choose a door">
+      <button class="door-button" data-door="1" aria-label="Door 1">
+        <span class="door-frame">
+          <span class="door-panel"></span>
+          <span class="door-knob"></span>
+          <span class="door-number">01</span>
+        </span>
+      </button>
+
+      <button class="door-button" data-door="2" aria-label="Door 2">
+        <span class="door-frame">
+          <span class="door-panel"></span>
+          <span class="door-knob"></span>
+          <span class="door-number">02</span>
+        </span>
+      </button>
+
+      <button class="door-button" data-door="3" aria-label="Door 3">
+        <span class="door-frame">
+          <span class="door-panel"></span>
+          <span class="door-knob"></span>
+          <span class="door-number">03</span>
+        </span>
+      </button>
+    </section>
+  </main>
+
+  <div class="result" id="wrongResult">
+    <div class="result-card">
+      <img class="meme-image" id="memeImage" src="principal-meme.jpeg" alt="">
+      <h2 id="wrongTitle"></h2>
+      <p id="wrongText"></p>
+      <button class="retry" id="retry">Try again</button>
+    </div>
+  </div>
+
+  <div class="birthday" id="birthday">
+    <h1>HAPPY BIRTHDAY,<span class="sam">SAM!!!</span></h1>
+  </div>
+
+  <div class="credit">Made by Kasra</div>
+
+  <script>
+    const typewriter = document.getElementById("typewriter");
+    const wrongResult = document.getElementById("wrongResult");
+    const wrongTitle = document.getElementById("wrongTitle");
+    const wrongText = document.getElementById("wrongText");
+    const birthday = document.getElementById("birthday");
+    const mainScene = document.getElementById("mainScene");
+
+    async function typeLine(text, speed = 102) {
+      const line = document.createElement("span");
+      line.className = "line";
+      typewriter.appendChild(line);
+
+      for (const char of text) {
+        const letter = document.createElement("span");
+        letter.className = "type-char";
+        letter.textContent = char;
+
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
+
+        line.append(letter, cursor);
+
+        await new Promise(resolve => setTimeout(resolve, speed));
+
+        cursor.remove();
+      }
+
+      const finalCursor = document.createElement("span");
+      finalCursor.className = "cursor";
+      line.appendChild(finalCursor);
+    }
+
+    async function startIntro() {
+      await typeLine("Hello.");
+      await new Promise(resolve => setTimeout(resolve, 550));
+
+      const oldCursor = typewriter.querySelector(".cursor");
+      if (oldCursor) oldCursor.remove();
+
+      await typeLine("Choose a door to continue.");
+    }
+
+    document.querySelectorAll(".door-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const door = Number(button.dataset.door);
+
+        if (door === 3) {
+          mainScene.style.opacity = "0";
+          mainScene.style.pointerEvents = "none";
+
+          setTimeout(() => {
+            birthday.classList.add("show");
+            document.body.classList.add("birthday-active");
+          }, 300);
+
+          return;
+        }
+
+        wrongResult.classList.remove("meme-mode");
+
+        if (door === 2) {
+          wrongTitle.textContent = "";
+          wrongText.textContent = "دَرِ اِشتِباه آقا، بَرو رِفرِش کن";
+          wrongResult.classList.add("meme-mode");
+        } else {
+          wrongTitle.textContent = "Wrong door.";
+          wrongText.textContent = "You picked the wrong one. Try again.";
+        }
+
+        wrongResult.classList.add("show");
+      });
+    });
+
+    document.getElementById("retry").addEventListener("click", () => {
+      wrongResult.classList.remove("show");
+    });
+
+    startIntro();
+  </script>
+</body>
+</html>
+'''
+
+index = project / "index.html"
+index.write_text(html, encoding="utf-8")
+
+zip_path = Path("/mnt/data/birthday_website_v5.zip")
+with ZipFile(zip_path, "w", ZIP_DEFLATED) as z:
+    z.write(index, "index.html")
+    z.write(asset, "principal-meme.jpeg")
+
+print("Created:", index)
+print("Created:", asset)
+print("Created:", zip_path)
