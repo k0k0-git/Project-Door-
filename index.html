@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050b1c">
+<meta name="theme-color" content="#030713">
 
 <title>...</title>
+
+<link rel="preload" as="image" href="principal-meme.jpeg">
 
 <style>
 
@@ -18,14 +20,13 @@
 html,
 body {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 body {
   font-family: Georgia, "Times New Roman", serif;
   color: #f4f6ff;
-
   background:
     linear-gradient(
       145deg,
@@ -33,27 +34,29 @@ body {
       #07152f 48%,
       #0b2450 100%
     );
-
   -webkit-tap-highlight-color: transparent;
 }
 
 
 /* =========================
-   MAIN OPENING SCREEN
+   OPENING SCREEN
    ========================= */
 
 .scene {
   width: 100%;
-  min-height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
-  padding: 10px 16px 76px;
+  justify-content: flex-start;
 
-  transform: translateY(-2vh);
+  padding:
+    max(8vh, 52px)
+    16px
+    max(76px, env(safe-area-inset-bottom));
 
   text-align: center;
 
@@ -64,7 +67,9 @@ body {
 .intro {
   width: min(94vw, 760px);
 
-  margin-bottom: 52px;
+  flex: 0 0 auto;
+
+  margin-bottom: clamp(7vh, 10vh, 11vh);
 }
 
 
@@ -123,19 +128,20 @@ body {
    ========================= */
 
 .doors {
-
   width: min(98vw, 980px);
+
+  flex: 0 0 auto;
 
   display: flex;
 
   justify-content: center;
+  align-items: center;
 
   gap: clamp(18px, 6vw, 58px);
 }
 
 
 .door-button {
-
   appearance: none;
 
   border: 0;
@@ -157,17 +163,18 @@ body {
 
 
 .door-frame {
-
   position: absolute;
 
   inset: 0;
 
-  border: 2px solid rgba(151,106,72,0.62);
+  border:
+    2px solid
+    rgba(151,106,72,0.62);
 
-  border-radius: 5px 5px 2px 2px;
+  border-radius:
+    5px 5px 2px 2px;
 
   background:
-
     linear-gradient(
       90deg,
       rgba(255,255,255,0.035),
@@ -175,7 +182,6 @@ body {
       transparent 80%,
       rgba(255,255,255,0.025)
     ),
-
     linear-gradient(
       145deg,
       #382015 0%,
@@ -184,8 +190,8 @@ body {
     );
 
   box-shadow:
-
-    0 18px 45px rgba(0,0,0,0.48),
+    0 18px 45px
+    rgba(0,0,0,0.48),
 
     inset
     0 0 24px
@@ -196,7 +202,6 @@ body {
 
 
 .door-panel {
-
   position: absolute;
 
   inset: 12% 13%;
@@ -206,7 +211,6 @@ body {
     rgba(235,207,180,0.20);
 
   background:
-
     linear-gradient(
       145deg,
       #432515 0%,
@@ -222,7 +226,6 @@ body {
 
 
 .door-knob {
-
   position: absolute;
 
   right: 16%;
@@ -238,7 +241,6 @@ body {
 
 
 .door-number {
-
   position: absolute;
 
   bottom: 8%;
@@ -263,7 +265,6 @@ body {
    ========================= */
 
 .result {
-
   position: fixed;
 
   inset: 0;
@@ -273,13 +274,12 @@ body {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   padding:
     30px
     30px
-    76px;
+    max(76px, env(safe-area-inset-bottom));
 
   text-align: center;
 
@@ -298,7 +298,6 @@ body {
 
 
 .result.show {
-
   opacity: 1;
 
   visibility: visible;
@@ -307,35 +306,27 @@ body {
 }
 
 
-.result-card {
-
-  width: min(92vw, 580px);
-}
-
-
 /*
-  The opening typewriter remains
-  completely unchanged.
-
-  This casual font is ONLY used
-  after a wrong door is selected.
+  Restored previous font.
+  Typewriter is also unchanged.
 */
 
 .result h2,
 .result p,
 .retry {
-
   font-family:
-    "Trebuchet MS",
-    "Avenir Next",
-    Avenir,
-    Arial,
-    sans-serif;
+    Georgia,
+    "Times New Roman",
+    serif;
+}
+
+
+.result-card {
+  width: min(92vw, 580px);
 }
 
 
 .result h2 {
-
   font-size:
     clamp(
       1.65rem,
@@ -350,7 +341,6 @@ body {
 
 
 .result p {
-
   font-size:
     clamp(
       1.12rem,
@@ -367,10 +357,7 @@ body {
 }
 
 
-/* Principal image */
-
 .meme-image {
-
   display: none;
 
   width:
@@ -389,18 +376,18 @@ body {
   box-shadow:
     0 16px 45px
     rgba(0,0,0,.35);
+
+  image-rendering: auto;
 }
 
 
 .result.meme-mode
 .meme-image {
-
   display: block;
 }
 
 
 .retry {
-
   border:
     1px solid
     rgba(255,255,255,.3);
@@ -425,7 +412,6 @@ body {
    ========================= */
 
 .birthday {
-
   position: fixed;
 
   inset: 0;
@@ -435,18 +421,16 @@ body {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   padding:
     30px
     30px
-    76px;
+    max(76px, env(safe-area-inset-bottom));
 
   text-align: center;
 
   background:
-
     linear-gradient(
       145deg,
       #dcecff 0%,
@@ -467,26 +451,21 @@ body {
 
 
 .birthday.show {
-
   opacity: 1;
 
   visibility: visible;
 }
 
 
-/*
-  Casual font ONLY for the
-  birthday celebration text.
-*/
-
 .birthday h1 {
+  /*
+    Restored previous font.
+  */
 
   font-family:
-    "Trebuchet MS",
-    "Avenir Next",
-    Avenir,
-    Arial,
-    sans-serif;
+    Georgia,
+    "Times New Roman",
+    serif;
 
   color: #6b4a32;
 
@@ -510,7 +489,6 @@ body {
 
 
 .birthday .sam {
-
   display: block;
 
   margin-top: .12em;
@@ -520,55 +498,37 @@ body {
 
 
 .birthday.show h1 {
-
   animation:
-
     birthdayZoom
-
     2.25s
-
     cubic-bezier(
       .16,
       .84,
       .24,
       1
     )
-
     forwards;
 
   animation-delay: 2.25s;
 }
 
 
-/*
-  Bigger initial overshoot.
-  Slower overall movement.
-*/
-
 @keyframes birthdayZoom {
 
   0% {
-
-    transform:
-      scale(.04);
+    transform: scale(.04);
 
     opacity: 0;
   }
 
-
   60% {
-
-    transform:
-      scale(1.34);
+    transform: scale(1.34);
 
     opacity: 1;
   }
 
-
   100% {
-
-    transform:
-      scale(1);
+    transform: scale(1);
 
     opacity: 1;
   }
@@ -581,7 +541,6 @@ body {
    ========================= */
 
 .credit {
-
   position: fixed;
 
   left: 50%;
@@ -617,37 +576,69 @@ body {
 
 body.birthday-active
 .credit {
-
   color:
     rgba(107,74,50,.55);
 }
 
 
 /* =========================
-   MOBILE
+   SMALL IPHONES / SHORT
+   VIEWPORTS
    ========================= */
 
 @media(max-width:420px) {
 
-  .doors {
+  .scene {
+    padding-top:
+      max(6vh, 42px);
 
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+
+  .intro {
+    margin-bottom:
+      clamp(5vh, 7vh, 8vh);
+  }
+
+
+  .doors {
     gap: 12px;
   }
 
 
   .door-button {
-
     width: 30vw;
   }
 
 
   .meme-image {
-
     width:
       min(76vw,330px);
   }
 
 }
+
+
+@media(max-height:700px) {
+
+  .scene {
+    padding-top: 28px;
+  }
+
+
+  .intro {
+    margin-bottom: 28px;
+  }
+
+
+  #typewriter {
+    min-height: 6.5rem;
+  }
+
+}
+
 
 </style>
 </head>
@@ -679,7 +670,6 @@ body.birthday-active
     class="doors"
     aria-label="Choose a door"
   >
-
 
     <button
       class="door-button"
@@ -761,7 +751,6 @@ body.birthday-active
 
     </button>
 
-
   </section>
 
 </main>
@@ -778,23 +767,20 @@ body.birthday-active
 
   <div class="result-card">
 
-
     <img
       class="meme-image"
       src="principal-meme.jpeg"
       alt=""
+      decoding="async"
     >
-
 
     <h2
       id="wrongTitle"
     ></h2>
 
-
     <p
       id="wrongText"
     ></p>
-
 
     <button
       class="retry"
@@ -802,7 +788,6 @@ body.birthday-active
     >
       Try again
     </button>
-
 
   </div>
 
@@ -894,13 +879,22 @@ celebrationSound.preload =
   "auto";
 
 
+/*
+  Try to load the sounds
+  before the user clicks.
+*/
+
+doorSound.load();
+celebrationSound.load();
+
+
 function playDoorSound() {
 
   doorSound.currentTime = 0;
 
-  doorSound
+  return doorSound
     .play()
-    .catch(() => {});
+    .catch(() => null);
 
 }
 
@@ -909,9 +903,9 @@ function playCelebrationSound() {
 
   celebrationSound.currentTime = 0;
 
-  celebrationSound
+  return celebrationSound
     .play()
-    .catch(() => {});
+    .catch(() => null);
 
 }
 
@@ -1022,9 +1016,7 @@ async function startIntro() {
 
 
   if(oldCursor) {
-
     oldCursor.remove();
-
   }
 
 
@@ -1048,24 +1040,26 @@ document
   )
   .forEach(button => {
 
-
     button.addEventListener(
       "click",
-      () => {
-
-
-        /*
-         * Every door gets
-         * the door-click sound.
-         */
-
-        playDoorSound();
-
+      async () => {
 
         const door =
           Number(
             button.dataset.door
           );
+
+
+        /*
+         * Every door starts
+         * with the door-click sound.
+         */
+
+        if(door !== 3) {
+
+          playDoorSound();
+
+        }
 
 
         /* =====================
@@ -1074,25 +1068,49 @@ document
 
         if(door === 3) {
 
+          /*
+           * First play the door sound.
+           *
+           * Once that sound finishes,
+           * start the celebration sound.
+           *
+           * This avoids the two sounds
+           * overlapping.
+           */
+
+          const doorPlayback =
+            playDoorSound();
+
+
+          if(doorPlayback) {
+
+            await doorPlayback;
+
+          }
+
 
           /*
-           * The celebration audio
-           * begins from the same
-           * user interaction.
+           * Start celebration only
+           * after the door sound.
            */
 
           playCelebrationSound();
 
 
-          mainScene.style.opacity =
-            "0";
-
-          mainScene.style.pointerEvents =
-            "none";
-
+          /*
+           * Give the celebration
+           * audio a moment to begin
+           * before changing the scene.
+           */
 
           setTimeout(
             () => {
+
+              mainScene.style.opacity =
+                "0";
+
+              mainScene.style.pointerEvents =
+                "none";
 
               birthday.classList.add(
                 "show"
@@ -1103,7 +1121,7 @@ document
               );
 
             },
-            300
+            180
           );
 
 
@@ -1125,19 +1143,15 @@ document
 
         if(door === 2) {
 
-
           wrongTitle.textContent =
             "";
-
 
           wrongText.textContent =
             "دَرِ اِشتِباه آقا، بَرو رِفِرِش کُن";
 
-
           wrongResult.classList.add(
             "meme-mode"
           );
-
 
         }
 
@@ -1146,10 +1160,8 @@ document
 
         else {
 
-
           wrongTitle.textContent =
             "Wrong door.";
-
 
           wrongText.textContent =
             "You picked the wrong one. Try again.";
@@ -1160,7 +1172,6 @@ document
         wrongResult.classList.add(
           "show"
         );
-
 
       }
     );
