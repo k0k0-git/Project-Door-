@@ -1,13 +1,8 @@
 <!doctype html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
-
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
 <meta name="theme-color" content="#050b1c">
 
 <title>...</title>
@@ -15,111 +10,89 @@
 <style>
 
 * {
-
   box-sizing: border-box;
-
   margin: 0;
-
   padding: 0;
-
 }
 
 html,
-
 body {
-
   width: 100%;
-
   min-height: 100%;
-
   overflow: hidden;
-
 }
 
 body {
-
   font-family: Georgia, "Times New Roman", serif;
-
   color: #f4f6ff;
 
-  background: linear-gradient(
-
-    145deg,
-
-    #030713 0%,
-
-    #07152f 48%,
-
-    #0b2450 100%
-
-  );
+  background:
+    linear-gradient(
+      145deg,
+      #030713 0%,
+      #07152f 48%,
+      #0b2450 100%
+    );
 
   -webkit-tap-highlight-color: transparent;
-
 }
 
+
+/* =========================
+   MAIN OPENING SCREEN
+   ========================= */
+
 .scene {
-
   width: 100%;
-
   min-height: 100svh;
 
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
 
-  padding: 10px 20px 70px;
+  padding: 10px 16px 76px;
 
-  transform: translateY(-3.5vh);
+  transform: translateY(-2vh);
 
   text-align: center;
 
   transition: opacity 0.8s ease;
-
 }
+
 
 .intro {
+  width: min(94vw, 760px);
 
-  width: min(90vw, 700px);
-
-  margin-bottom: 48px;
-
+  margin-bottom: 52px;
 }
 
-#typewriter {
 
-  font-size: clamp(1.15rem, 4.8vw, 1.65rem);
+#typewriter {
+  font-size: clamp(1.2rem, 5.2vw, 1.75rem);
 
   line-height: 1.9;
 
   letter-spacing: 0.07em;
 
   min-height: 7.5rem;
-
 }
+
 
 .line {
-
   display: block;
-
 }
+
 
 .type-char {
-
   white-space: pre;
-
 }
 
-.cursor {
 
+.cursor {
   display: inline-block;
 
   width: 2px;
-
   height: 1em;
 
   margin-left: 4px;
@@ -128,37 +101,38 @@ body {
 
   background: currentColor;
 
-  animation: blink 0.8s steps(1, end) infinite;
-
+  animation:
+    blink
+    0.8s
+    steps(1, end)
+    infinite;
 }
+
 
 @keyframes blink {
 
   50% {
-
     opacity: 0;
-
   }
 
 }
 
+
 /* =========================
-
    DOORS
-
    ========================= */
 
 .doors {
 
-  width: min(94vw, 900px);
+  width: min(98vw, 980px);
 
   display: flex;
 
   justify-content: center;
 
-  gap: clamp(16px, 5vw, 48px);
-
+  gap: clamp(18px, 6vw, 58px);
 }
+
 
 .door-button {
 
@@ -170,7 +144,7 @@ body {
 
   color: inherit;
 
-  width: clamp(90px, 24vw, 185px);
+  width: clamp(105px, 27vw, 205px);
 
   aspect-ratio: 0.58;
 
@@ -179,8 +153,8 @@ body {
   touch-action: manipulation;
 
   position: relative;
-
 }
+
 
 .door-frame {
 
@@ -188,47 +162,38 @@ body {
 
   inset: 0;
 
-  border: 2px solid rgba(151, 106, 72, 0.62);
+  border: 2px solid rgba(151,106,72,0.62);
 
   border-radius: 5px 5px 2px 2px;
 
   background:
 
     linear-gradient(
-
       90deg,
-
       rgba(255,255,255,0.035),
-
       transparent 20%,
-
       transparent 80%,
-
       rgba(255,255,255,0.025)
-
     ),
 
     linear-gradient(
-
       145deg,
-
-      #452718 0%,
-
-      #60371f 48%,
-
-      #28150d 100%
-
+      #382015 0%,
+      #4d2a18 48%,
+      #1f1009 100%
     );
 
   box-shadow:
 
     0 18px 45px rgba(0,0,0,0.48),
 
-    inset 0 0 24px rgba(0,0,0,0.38);
+    inset
+    0 0 24px
+    rgba(0,0,0,0.38);
 
   overflow: hidden;
-
 }
+
 
 .door-panel {
 
@@ -236,43 +201,41 @@ body {
 
   inset: 12% 13%;
 
-  border: 1px solid rgba(235,207,180,0.20);
+  border:
+    1px solid
+    rgba(235,207,180,0.20);
 
   background:
 
     linear-gradient(
-
       145deg,
-
-      #512e1b 0%,
-
-      #382014 55%,
-
-      #24130c 100%
-
+      #432515 0%,
+      #2d180f 55%,
+      #1d0e08 100%
     );
 
-  box-shadow: inset 0 0 18px rgba(0,0,0,0.30);
-
+  box-shadow:
+    inset
+    0 0 18px
+    rgba(0,0,0,0.30);
 }
+
 
 .door-knob {
 
   position: absolute;
 
   right: 16%;
-
   top: 52%;
 
   width: 7px;
-
   height: 7px;
 
   border-radius: 50%;
 
   background: #b58a5a;
-
 }
+
 
 .door-number {
 
@@ -281,21 +244,22 @@ body {
   bottom: 8%;
 
   left: 0;
-
   right: 0;
 
-  font: clamp(0.7rem, 2.5vw, 0.9rem) Arial, sans-serif;
+  font:
+    clamp(.72rem, 2.7vw, .95rem)
+    Arial,
+    sans-serif;
 
-  letter-spacing: 0.25em;
+  letter-spacing: .25em;
 
-  color: rgba(255,239,219,0.72);
-
+  color:
+    rgba(255,239,219,.72);
 }
 
+
 /* =========================
-
    WRONG DOOR SCREEN
-
    ========================= */
 
 .result {
@@ -312,7 +276,10 @@ body {
 
   justify-content: center;
 
-  padding: 30px 30px 70px;
+  padding:
+    30px
+    30px
+    76px;
 
   text-align: center;
 
@@ -325,12 +292,10 @@ body {
   pointer-events: none;
 
   transition:
-
-    opacity 0.55s ease,
-
-    visibility 0.55s ease;
-
+    opacity .55s ease,
+    visibility .55s ease;
 }
+
 
 .result.show {
 
@@ -339,44 +304,68 @@ body {
   visibility: visible;
 
   pointer-events: auto;
-
 }
+
 
 .result-card {
 
-  width: min(90vw, 560px);
-
+  width: min(92vw, 580px);
 }
+
+
+/*
+  The opening typewriter remains
+  completely unchanged.
+
+  This casual font is ONLY used
+  after a wrong door is selected.
+*/
+
+.result h2,
+.result p,
+.retry {
+
+  font-family:
+    "Trebuchet MS",
+    "Avenir Next",
+    Avenir,
+    Arial,
+    sans-serif;
+}
+
 
 .result h2 {
 
-  font-size: clamp(1.5rem, 6vw, 2.3rem);
+  font-size:
+    clamp(
+      1.65rem,
+      7vw,
+      2.55rem
+    );
 
-  font-weight: 400;
+  font-weight: 500;
 
   margin-bottom: 18px;
-
 }
+
 
 .result p {
 
-  font:
+  font-size:
+    clamp(
+      1.12rem,
+      5.2vw,
+      1.5rem
+    );
 
-    clamp(1.05rem, 5vw, 1.45rem)
+  line-height: 1.65;
 
-    / 1.65
-
-    Georgia,
-
-    "Times New Roman",
-
-    serif;
-
-  color: rgba(245,248,255,0.86);
+  color:
+    rgba(245,248,255,.88);
 
   margin-bottom: 24px;
-
 }
+
 
 /* Principal image */
 
@@ -384,48 +373,55 @@ body {
 
   display: none;
 
-  width: min(72vw, 330px);
+  width:
+    min(72vw,330px);
 
   max-height: 38svh;
 
   object-fit: contain;
 
-  margin: 0 auto 20px;
+  margin:
+    0 auto
+    20px;
 
   border-radius: 10px;
 
-  box-shadow: 0 16px 45px rgba(0,0,0,0.35);
-
+  box-shadow:
+    0 16px 45px
+    rgba(0,0,0,.35);
 }
 
-.result.meme-mode .meme-image {
+
+.result.meme-mode
+.meme-image {
 
   display: block;
-
 }
+
 
 .retry {
 
-  border: 1px solid rgba(255,255,255,0.3);
+  border:
+    1px solid
+    rgba(255,255,255,.3);
 
   background: transparent;
 
   color: #fff;
 
-  padding: 12px 22px;
+  padding:
+    12px 22px;
 
   border-radius: 999px;
 
   cursor: pointer;
 
-  letter-spacing: 0.08em;
-
+  letter-spacing: .08em;
 }
 
+
 /* =========================
-
    BIRTHDAY REVEAL
-
    ========================= */
 
 .birthday {
@@ -442,22 +438,20 @@ body {
 
   justify-content: center;
 
-  padding: 30px 30px 70px;
+  padding:
+    30px
+    30px
+    76px;
 
   text-align: center;
 
   background:
 
     linear-gradient(
-
       145deg,
-
       #dcecff 0%,
-
       #f8fbff 52%,
-
       #ffffff 100%
-
     );
 
   opacity: 0;
@@ -467,48 +461,63 @@ body {
   pointer-events: none;
 
   transition:
-
     opacity 3.25s ease,
-
     visibility 3.25s ease;
-
 }
+
 
 .birthday.show {
 
   opacity: 1;
 
   visibility: visible;
-
 }
+
+
+/*
+  Casual font ONLY for the
+  birthday celebration text.
+*/
 
 .birthday h1 {
 
+  font-family:
+    "Trebuchet MS",
+    "Avenir Next",
+    Avenir,
+    Arial,
+    sans-serif;
+
   color: #6b4a32;
 
-  font-size: clamp(2.6rem, 12vw, 7rem);
+  font-size:
+    clamp(
+      3.25rem,
+      15vw,
+      8rem
+    );
 
-  line-height: 1.04;
+  line-height: .98;
 
   font-weight: 700;
 
-  letter-spacing: -0.03em;
+  letter-spacing: -.045em;
 
-  transform: scale(0.04);
+  transform: scale(.04);
 
   opacity: 0;
-
 }
+
 
 .birthday .sam {
 
   display: block;
 
-  margin-top: 0.14em;
+  margin-top: .12em;
 
   font-size: 1.18em;
-
 }
+
 
 .birthday.show h1 {
 
@@ -516,48 +525,59 @@ body {
 
     birthdayZoom
 
-    1.35s
+    2.25s
 
-    cubic-bezier(0.16,0.84,0.24,1)
+    cubic-bezier(
+      .16,
+      .84,
+      .24,
+      1
+    )
 
     forwards;
 
-  animation-delay: 2.95s;
-
+  animation-delay: 2.25s;
 }
+
+
+/*
+  Bigger initial overshoot.
+  Slower overall movement.
+*/
 
 @keyframes birthdayZoom {
 
   0% {
 
-    transform: scale(0.04);
+    transform:
+      scale(.04);
 
     opacity: 0;
-
   }
 
-  58% {
 
-    transform: scale(1.18);
+  60% {
+
+    transform:
+      scale(1.34);
 
     opacity: 1;
-
   }
+
 
   100% {
 
-    transform: scale(1);
+    transform:
+      scale(1);
 
     opacity: 1;
-
   }
 
 }
 
+
 /* =========================
-
    CREDIT
-
    ========================= */
 
 .credit {
@@ -566,462 +586,606 @@ body {
 
   left: 50%;
 
-  bottom: max(16px, env(safe-area-inset-bottom));
+  bottom:
+    max(
+      16px,
+      env(safe-area-inset-bottom)
+    );
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 
   z-index: 100;
 
   font:
-
     500
-
-    clamp(0.7rem, 2.7vw, 0.9rem)
-
+    clamp(.7rem,2.7vw,.9rem)
     / 1
-
     Arial,
-
     sans-serif;
 
-  letter-spacing: 0.08em;
+  letter-spacing: .08em;
 
   white-space: nowrap;
 
-  color: rgba(245,248,255,0.48);
+  color:
+    rgba(245,248,255,.48);
 
   pointer-events: none;
-
 }
 
-body.birthday-active .credit {
 
-  color: rgba(107,74,50,0.55);
+body.birthday-active
+.credit {
 
+  color:
+    rgba(107,74,50,.55);
 }
+
 
 /* =========================
-
    MOBILE
-
    ========================= */
 
-@media (max-width: 420px) {
+@media(max-width:420px) {
 
   .doors {
 
-    gap: 10px;
-
+    gap: 12px;
   }
+
 
   .door-button {
 
-    width: 29vw;
-
+    width: 30vw;
   }
+
 
   .meme-image {
 
-    width: min(76vw, 330px);
-
+    width:
+      min(76vw,330px);
   }
 
 }
 
 </style>
-
 </head>
+
 
 <body>
 
+
 <!-- =========================
-
-     MAIN OPENING
-
+     OPENING
      ========================= -->
 
-<main class="scene" id="mainScene">
+<main
+  class="scene"
+  id="mainScene"
+>
 
   <section class="intro">
 
-    <div id="typewriter" aria-live="polite"></div>
+    <div
+      id="typewriter"
+      aria-live="polite"
+    ></div>
 
   </section>
 
-  <section class="doors" aria-label="Choose a door">
+
+  <section
+    class="doors"
+    aria-label="Choose a door"
+  >
+
 
     <button
-
       class="door-button"
-
       data-door="1"
-
       aria-label="Door 1"
-
     >
 
       <span class="door-frame">
 
-        <span class="door-panel"></span>
+        <span
+          class="door-panel"
+        ></span>
 
-        <span class="door-knob"></span>
+        <span
+          class="door-knob"
+        ></span>
 
-        <span class="door-number">01</span>
+        <span
+          class="door-number"
+        >
+          01
+        </span>
 
       </span>
 
     </button>
 
+
     <button
-
       class="door-button"
-
       data-door="2"
-
       aria-label="Door 2"
-
     >
 
       <span class="door-frame">
 
-        <span class="door-panel"></span>
+        <span
+          class="door-panel"
+        ></span>
 
-        <span class="door-knob"></span>
+        <span
+          class="door-knob"
+        ></span>
 
-        <span class="door-number">02</span>
+        <span
+          class="door-number"
+        >
+          02
+        </span>
 
       </span>
 
     </button>
+
 
     <button
-
       class="door-button"
-
       data-door="3"
-
       aria-label="Door 3"
-
     >
 
       <span class="door-frame">
 
-        <span class="door-panel"></span>
+        <span
+          class="door-panel"
+        ></span>
 
-        <span class="door-knob"></span>
+        <span
+          class="door-knob"
+        ></span>
 
-        <span class="door-number">03</span>
+        <span
+          class="door-number"
+        >
+          03
+        </span>
 
       </span>
 
     </button>
+
 
   </section>
 
 </main>
 
+
 <!-- =========================
-
      WRONG DOOR
-
      ========================= -->
 
-<div class="result" id="wrongResult">
+<div
+  class="result"
+  id="wrongResult"
+>
 
   <div class="result-card">
 
+
     <img
-
       class="meme-image"
-
       src="principal-meme.jpeg"
-
       alt=""
-
     >
 
-    <h2 id="wrongTitle"></h2>
 
-    <p id="wrongText"></p>
+    <h2
+      id="wrongTitle"
+    ></h2>
+
+
+    <p
+      id="wrongText"
+    ></p>
+
 
     <button
-
       class="retry"
-
       id="retry"
-
     >
-
       Try again
-
     </button>
+
 
   </div>
 
 </div>
 
+
 <!-- =========================
-
-     BIRTHDAY SCREEN
-
+     BIRTHDAY
      ========================= -->
 
-<div class="birthday" id="birthday">
+<div
+  class="birthday"
+  id="birthday"
+>
 
   <h1>
 
     HAPPY BIRTHDAY,
 
-    <span class="sam">SAM!!!</span>
+    <span class="sam">
+      SAM!!!
+    </span>
 
   </h1>
 
 </div>
 
+
 <!-- =========================
-
      CREDIT
-
      ========================= -->
 
 <div class="credit">
-
   Made by Kasra
-
 </div>
+
 
 <script>
 
-const typewriter =
-
-  document.getElementById("typewriter");
-
-const wrongResult =
-
-  document.getElementById("wrongResult");
-
-const wrongTitle =
-
-  document.getElementById("wrongTitle");
-
-const wrongText =
-
-  document.getElementById("wrongText");
-
-const birthday =
-
-  document.getElementById("birthday");
-
-const mainScene =
-
-  document.getElementById("mainScene");
-
 /* =========================
-
-   TYPEWRITER
-
+   ELEMENTS
    ========================= */
 
-async function typeLine(text, speed = 102) {
+const typewriter =
+  document.getElementById(
+    "typewriter"
+  );
+
+const wrongResult =
+  document.getElementById(
+    "wrongResult"
+  );
+
+const wrongTitle =
+  document.getElementById(
+    "wrongTitle"
+  );
+
+const wrongText =
+  document.getElementById(
+    "wrongText"
+  );
+
+const birthday =
+  document.getElementById(
+    "birthday"
+  );
+
+const mainScene =
+  document.getElementById(
+    "mainScene"
+  );
+
+
+/* =========================
+   AUDIO
+   ========================= */
+
+const doorSound =
+  new Audio("door-sound.wav");
+
+const celebrationSound =
+  new Audio("celebration-sound.wav");
+
+
+doorSound.preload = "auto";
+
+celebrationSound.preload =
+  "auto";
+
+
+function playDoorSound() {
+
+  doorSound.currentTime = 0;
+
+  doorSound
+    .play()
+    .catch(() => {});
+
+}
+
+
+function playCelebrationSound() {
+
+  celebrationSound.currentTime = 0;
+
+  celebrationSound
+    .play()
+    .catch(() => {});
+
+}
+
+
+/* =========================
+   TYPEWRITER
+   ========================= */
+
+async function typeLine(
+  text,
+  speed = 102
+) {
 
   const line =
-
-    document.createElement("span");
+    document.createElement(
+      "span"
+    );
 
   line.className = "line";
 
   typewriter.appendChild(line);
 
-  for (const char of text) {
+
+  for(
+    const char of text
+  ) {
 
     const letter =
+      document.createElement(
+        "span"
+      );
 
-      document.createElement("span");
+    letter.className =
+      "type-char";
 
-    letter.className = "type-char";
+    letter.textContent =
+      char;
 
-    letter.textContent = char;
 
     const cursor =
+      document.createElement(
+        "span"
+      );
 
-      document.createElement("span");
+    cursor.className =
+      "cursor";
 
-    cursor.className = "cursor";
 
-    line.append(letter, cursor);
-
-    await new Promise(resolve =>
-
-      setTimeout(resolve, speed)
-
+    line.append(
+      letter,
+      cursor
     );
+
+
+    await new Promise(
+      resolve =>
+        setTimeout(
+          resolve,
+          speed
+        )
+    );
+
 
     cursor.remove();
 
   }
 
+
   const finalCursor =
+    document.createElement(
+      "span"
+    );
 
-    document.createElement("span");
+  finalCursor.className =
+    "cursor";
 
-  finalCursor.className = "cursor";
-
-  line.appendChild(finalCursor);
+  line.appendChild(
+    finalCursor
+  );
 
 }
 
+
 /* =========================
-
-   START INTRO
-
+   INTRO
    ========================= */
 
 async function startIntro() {
 
-  await typeLine("Hello.");
-
-  await new Promise(resolve =>
-
-    setTimeout(resolve, 550)
-
+  await typeLine(
+    "Hello."
   );
 
+
+  await new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        550
+      )
+  );
+
+
   const oldCursor =
+    typewriter.querySelector(
+      ".cursor"
+    );
 
-    typewriter.querySelector(".cursor");
 
-  if (oldCursor) {
+  if(oldCursor) {
 
     oldCursor.remove();
 
   }
 
+
   await typeLine(
-
     "Choose a door to continue."
-
   );
 
 }
 
+
 startIntro();
 
+
 /* =========================
-
-   DOOR INTERACTIONS
-
+   DOORS
    ========================= */
 
 document
-
-  .querySelectorAll(".door-button")
-
+  .querySelectorAll(
+    ".door-button"
+  )
   .forEach(button => {
 
-    button.addEventListener("click", () => {
 
-      const door =
+    button.addEventListener(
+      "click",
+      () => {
 
-        Number(button.dataset.door);
 
-      /* =====================
+        /*
+         * Every door gets
+         * the door-click sound.
+         */
 
-         DOOR 3 = BIRTHDAY
+        playDoorSound();
 
-         ===================== */
 
-      if (door === 3) {
-
-        mainScene.style.opacity = "0";
-
-        mainScene.style.pointerEvents =
-
-          "none";
-
-        setTimeout(() => {
-
-          birthday.classList.add("show");
-
-          document.body.classList.add(
-
-            "birthday-active"
-
+        const door =
+          Number(
+            button.dataset.door
           );
 
-        }, 300);
 
-        return;
+        /* =====================
+           DOOR 3
+           ===================== */
 
-      }
+        if(door === 3) {
 
-      /* =====================
 
-         WRONG DOORS
+          /*
+           * The celebration audio
+           * begins from the same
+           * user interaction.
+           */
 
-         ===================== */
+          playCelebrationSound();
 
-      wrongResult.classList.remove(
 
-        "meme-mode"
+          mainScene.style.opacity =
+            "0";
 
-      );
+          mainScene.style.pointerEvents =
+            "none";
 
-      /* DOOR 2 = PRINCIPAL MEME */
 
-      if (door === 2) {
+          setTimeout(
+            () => {
 
-        wrongTitle.textContent = "";
+              birthday.classList.add(
+                "show"
+              );
 
-        wrongText.textContent =
+              document.body.classList.add(
+                "birthday-active"
+              );
 
-          "دَرِ اِشتِباه آقا، بَرو رِفرِش کن";
+            },
+            300
+          );
 
-        wrongResult.classList.add(
 
+          return;
+
+        }
+
+
+        /* =====================
+           WRONG DOORS
+           ===================== */
+
+        wrongResult.classList.remove(
           "meme-mode"
-
         );
 
+
+        /* DOOR 2 */
+
+        if(door === 2) {
+
+
+          wrongTitle.textContent =
+            "";
+
+
+          wrongText.textContent =
+            "دَرِ اِشتِباه آقا، بَرو رِفِرِش کُن";
+
+
+          wrongResult.classList.add(
+            "meme-mode"
+          );
+
+
+        }
+
+
+        /* DOOR 1 */
+
+        else {
+
+
+          wrongTitle.textContent =
+            "Wrong door.";
+
+
+          wrongText.textContent =
+            "You picked the wrong one. Try again.";
+
+        }
+
+
+        wrongResult.classList.add(
+          "show"
+        );
+
+
       }
-
-      /* DOOR 1 = NORMAL WRONG MESSAGE */
-
-      else {
-
-        wrongTitle.textContent =
-
-          "Wrong door.";
-
-        wrongText.textContent =
-
-          "You picked the wrong one. Try again.";
-
-      }
-
-      wrongResult.classList.add("show");
-
-    });
+    );
 
   });
 
+
 /* =========================
-
    TRY AGAIN
-
    ========================= */
 
 document
-
   .getElementById("retry")
+  .addEventListener(
+    "click",
+    () => {
 
-  .addEventListener("click", () => {
+      wrongResult.classList.remove(
+        "show"
+      );
 
-    wrongResult.classList.remove("show");
-
-  });
+    }
+  );
 
 </script>
 
 </body>
-
 </html>
