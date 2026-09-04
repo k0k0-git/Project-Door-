@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#030713">
+
+<meta name="theme-color" content="#07152f">
 <meta name="color-scheme" content="dark">
 
 <title>...</title>
@@ -25,7 +26,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #030713;
+  background: #07152f;
 }
 
 body {
@@ -311,11 +312,6 @@ body {
 }
 
 
-/*
-  Restored previous font.
-  Typewriter is also unchanged.
-*/
-
 .result h2,
 .result p,
 .retry {
@@ -463,10 +459,6 @@ body {
 
 
 .birthday h1 {
-  /*
-    Restored previous font.
-  */
-
   font-family:
     Georgia,
     "Times New Roman",
@@ -595,7 +587,7 @@ body.birthday-active
 
   .scene {
     padding-top:
-      max(6vh, 42px);
+      max(10vh, 72px);
 
     padding-left: 10px;
     padding-right: 10px;
@@ -604,7 +596,7 @@ body.birthday-active
 
   .intro {
     margin-bottom:
-      clamp(5vh, 7vh, 8vh);
+      clamp(6vh, 8vh, 9vh);
   }
 
 
@@ -629,7 +621,7 @@ body.birthday-active
 @media(max-height:700px) {
 
   .scene {
-    padding-top: 28px;
+    padding-top: 42px;
   }
 
 
@@ -736,7 +728,8 @@ body.birthday-active
 
       <span class="door-frame">
 
-        <span class="door-panel"
+        <span
+          class="door-panel"
         ></span>
 
         <span
@@ -882,8 +875,7 @@ celebrationSound.preload =
 
 
 /*
-  Try to load the sounds
-  before the user clicks.
+  Preload the sounds.
 */
 
 doorSound.load();
@@ -891,33 +883,42 @@ celebrationSound.load();
 
 
 /*
-  Start the door sound as soon
-  as the finger touches the door.
-  The click handler below remains
-  as a fallback for compatibility.
+  Start the door sound on the
+  earliest touch/pointer event.
+  This avoids waiting for the
+  later click event on mobile.
 */
 
-let doorSoundStarted = false;
-let pendingDoorPlayback = null;
+let doorPlaybackPromise = null;
 
 
 function beginDoorSound() {
 
-  if(doorSoundStarted) {
-    return pendingDoorPlayback;
+  /*
+    If the sound is already playing,
+    do not restart it.
+  */
+
+  if(
+    !doorSound.paused &&
+    !doorSound.ended
+  ) {
+
+    return doorPlaybackPromise;
+
   }
 
 
-  doorSoundStarted = true;
-
   doorSound.currentTime = 0;
 
-  pendingDoorPlayback =
+
+  doorPlaybackPromise =
     doorSound
       .play()
       .catch(() => null);
 
-  return pendingDoorPlayback;
+
+  return doorPlaybackPromise;
 
 }
 
@@ -1065,8 +1066,9 @@ document
 
 
     /*
-     * Touch/pointer begins the
-     * door sound immediately.
+     * Start audio immediately
+     * when the finger touches
+     * the door.
      */
 
     button.addEventListener(
@@ -1090,8 +1092,9 @@ document
 
 
         /*
-         * Fallback in case the click
-         * happened without pointerdown.
+         * Fallback for situations
+         * where pointerdown did not
+         * start the audio.
          */
 
         const doorPlayback =
@@ -1105,14 +1108,11 @@ document
         if(door === 3) {
 
           /*
-           * Wait only for the browser
-           * to accept/start playback,
-           * not for the sound to finish.
+           * Wait only until the browser
+           * accepts/starts the sound.
            *
-           * This keeps the visual response
-           * immediate while preventing
-           * the celebration from starting
-           * before the door sound.
+           * Do NOT wait for the door
+           * sound to finish.
            */
 
           if(doorPlayback) {
@@ -1123,17 +1123,16 @@ document
 
 
           /*
-           * Start celebration only
-           * after door playback begins.
+           * Start celebration after
+           * the door audio has begun.
            */
 
           playCelebrationSound();
 
 
           /*
-           * Give the celebration
-           * audio a moment to begin
-           * before changing the scene.
+           * Preserve the established
+           * visual transition timing.
            */
 
           setTimeout(
@@ -1205,15 +1204,6 @@ document
         wrongResult.classList.add(
           "show"
         );
-
-
-        /*
-         * Allow the next door press
-         * to start the sound again.
-         */
-
-        doorSoundStarted = false;
-        pendingDoorPlayback = null;
 
       }
     );
