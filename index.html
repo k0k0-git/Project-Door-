@@ -4,10 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#030713">
+<meta name="color-scheme" content="dark">
 
 <title>...</title>
 
 <link rel="preload" as="image" href="principal-meme.jpeg">
+<link rel="preload" as="audio" href="door-sound.wav">
+<link rel="preload" as="audio" href="celebration-sound.wav">
 
 <style>
 
@@ -22,6 +25,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  background: #030713;
 }
 
 body {
@@ -35,6 +39,7 @@ body {
       #0b2450 100%
     );
   -webkit-tap-highlight-color: transparent;
+  color-scheme: dark;
 }
 
 
@@ -706,9 +711,7 @@ body.birthday-active
 
       <span class="door-frame">
 
-        <span
-          class="door-panel"
-        ></span>
+        <span class="door-panel"></span>
 
         <span
           class="door-knob"
@@ -733,8 +736,7 @@ body.birthday-active
 
       <span class="door-frame">
 
-        <span
-          class="door-panel"
+        <span class="door-panel"
         ></span>
 
         <span
@@ -888,13 +890,34 @@ doorSound.load();
 celebrationSound.load();
 
 
-function playDoorSound() {
+/*
+  Start the door sound as soon
+  as the finger touches the door.
+  The click handler below remains
+  as a fallback for compatibility.
+*/
+
+let doorSoundStarted = false;
+let pendingDoorPlayback = null;
+
+
+function beginDoorSound() {
+
+  if(doorSoundStarted) {
+    return pendingDoorPlayback;
+  }
+
+
+  doorSoundStarted = true;
 
   doorSound.currentTime = 0;
 
-  return doorSound
-    .play()
-    .catch(() => null);
+  pendingDoorPlayback =
+    doorSound
+      .play()
+      .catch(() => null);
+
+  return pendingDoorPlayback;
 
 }
 
@@ -1040,6 +1063,22 @@ document
   )
   .forEach(button => {
 
+
+    /*
+     * Touch/pointer begins the
+     * door sound immediately.
+     */
+
+    button.addEventListener(
+      "pointerdown",
+      () => {
+
+        beginDoorSound();
+
+      }
+    );
+
+
     button.addEventListener(
       "click",
       async () => {
@@ -1051,15 +1090,12 @@ document
 
 
         /*
-         * Every door starts
-         * with the door-click sound.
+         * Fallback in case the click
+         * happened without pointerdown.
          */
 
-        if(door !== 3) {
-
-          playDoorSound();
-
-        }
+        const doorPlayback =
+          beginDoorSound();
 
 
         /* =====================
@@ -1069,18 +1105,15 @@ document
         if(door === 3) {
 
           /*
-           * First play the door sound.
+           * Wait only for the browser
+           * to accept/start playback,
+           * not for the sound to finish.
            *
-           * Once that sound finishes,
-           * start the celebration sound.
-           *
-           * This avoids the two sounds
-           * overlapping.
+           * This keeps the visual response
+           * immediate while preventing
+           * the celebration from starting
+           * before the door sound.
            */
-
-          const doorPlayback =
-            playDoorSound();
-
 
           if(doorPlayback) {
 
@@ -1091,7 +1124,7 @@ document
 
           /*
            * Start celebration only
-           * after the door sound.
+           * after door playback begins.
            */
 
           playCelebrationSound();
@@ -1172,6 +1205,15 @@ document
         wrongResult.classList.add(
           "show"
         );
+
+
+        /*
+         * Allow the next door press
+         * to start the sound again.
+         */
+
+        doorSoundStarted = false;
+        pendingDoorPlayback = null;
 
       }
     );
