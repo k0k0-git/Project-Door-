@@ -587,7 +587,7 @@ body.birthday-active
 
   .scene {
     padding-top:
-      max(10vh, 72px);
+      max(10.5vh, 75px);
 
     padding-left: 10px;
     padding-right: 10px;
@@ -856,6 +856,11 @@ const mainScene =
     "mainScene"
   );
 
+const themeColorMeta =
+  document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
 
 /* =========================
    AUDIO
@@ -885,8 +890,6 @@ celebrationSound.load();
 /*
   Start the door sound on the
   earliest touch/pointer event.
-  This avoids waiting for the
-  later click event on mobile.
 */
 
 let doorPlaybackPromise = null;
@@ -1092,8 +1095,8 @@ document
 
 
         /*
-         * Fallback for situations
-         * where pointerdown did not
+         * Fallback in case
+         * pointerdown did not
          * start the audio.
          */
 
@@ -1106,6 +1109,31 @@ document
            ===================== */
 
         if(door === 3) {
+
+          /*
+           * Immediately switch Safari's
+           * browser chrome to the light
+           * birthday color.
+           *
+           * This happens at the exact
+           * start of the transition,
+           * while the page itself fades
+           * normally.
+           */
+
+          if(themeColorMeta) {
+
+            themeColorMeta.setAttribute(
+              "content",
+              "#f8fbff"
+            );
+
+          }
+
+
+          document.documentElement.style
+            .colorScheme = "light";
+
 
           /*
            * Wait only until the browser
